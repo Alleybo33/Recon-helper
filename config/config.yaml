@@ -1,0 +1,213 @@
+# Recon Automation Configuration
+# ================================
+
+# Target Configuration
+target:
+  domain: "example.com"
+  scope_file: null  # Optional: Path to file with in-scope domains
+
+# Directory Configuration
+directories:
+  output: "output"
+  logs: "logs"
+  screenshots: "screenshots"
+  reports: "reports"
+
+# Subdomain Enumeration Tools
+subdomain_enum:
+  enable_amass: true
+  enable_subfinder: true
+  enable_assetfinder: true
+  enable_crtsh: true
+  enable_github_subdomains: true
+  enable_shodan: false  # Requires API key
+  enable_censys: false  # Requires API key
+  
+  amass:
+    passive: true
+    timeout: 30  # minutes
+    
+  subfinder:
+    sources: "crtsh,hackertarget,threatcrowd,virustotal"
+    threads: 10
+    timeout: 10
+    
+  assetfinder:
+    timeout: 10
+
+# DNS Resolution
+dns_resolution:
+  enable_dnsx: true
+  enable_massdns: false
+  
+  dnsx:
+    threads: 50
+    retry: 2
+    timeout: 10
+
+# HTTP Probing
+http_probing:
+  enable_httpx: true
+  
+  httpx:
+    threads: 50
+    timeout: 10
+    retry: 2
+    ports: "80,443,8000,8080,8443,8888,9000,3000,8081,8082,8090,8180,8888,9090,9443,10000"
+    follow_redirects: true
+    status_code: true
+    title: true
+    tech_detect: true
+    web_server: true
+    content_length: true
+    screenshot: false  # Use gowitness instead
+
+# Port Scanning
+port_scanning:
+  enable_nmap: true
+  enable_masscan: false
+  
+  nmap:
+    quick_scan:
+      enable: true
+      top_ports: 1000
+      timing: "T4"
+      
+    full_scan:
+      enable: true
+      ports: "8000,8080,8443,8888,9000,3000,8081,8082,8090,8180,9090,9443,10000,4443,7000,7001,7002"
+      scripts: "default,http-title,http-methods,http-headers"
+      version_detection: true
+      os_detection: false  # Can be slow
+      
+  masscan:
+    rate: 1000
+    ports: "1-65535"
+
+# Screenshot Capture
+screenshots:
+  enable_gowitness: true
+  enable_eyewitness: false
+  
+  gowitness:
+    timeout: 10
+    threads: 10
+    resolution: "1440x900"
+    fullpage: false
+    
+  eyewitness:
+    timeout: 30
+    threads: 10
+
+# Technology Detection
+tech_detection:
+  enable_wappalyzer: true
+  enable_whatweb: true
+  enable_webanalyze: true
+  enable_builtwith: false  # Requires API key
+  
+  whatweb:
+    aggression: 3
+    
+  builtwith:
+    api_key: null  # Add your API key here
+
+# Content Discovery
+content_discovery:
+  enable_feroxbuster: true
+  enable_ffuf: true
+  enable_gobuster: false
+  
+  feroxbuster:
+    threads: 50
+    wordlist: "/usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt"
+    extensions: "php,html,js,txt,json,xml,asp,aspx,jsp"
+    depth: 3
+    timeout: 10
+    
+  ffuf:
+    threads: 40
+    wordlist: "/usr/share/seclists/Discovery/Web-Content/common.txt"
+    extensions: "php,html,js,txt"
+
+# JavaScript Analysis
+js_analysis:
+  enable_linkfinder: true
+  enable_jsluice: true
+  enable_getjs: true
+  
+  linkfinder:
+    regex: "default"
+
+# Vulnerability Scanning
+vulnerability_scanning:
+  enable_nuclei: true
+  
+  nuclei:
+    templates: "cves,vulnerabilities,exposures,misconfigurations,takeovers"
+    severity: "critical,high,medium"
+    threads: 25
+    rate_limit: 150
+    bulk_size: 25
+    timeout: 5
+    retries: 1
+
+# Additional Scanners
+additional_tools:
+  enable_waybackurls: true
+  enable_gau: true
+  enable_paramspider: true
+  enable_arjun: true
+  enable_dalfox: false  # XSS scanning (can be slow)
+  
+  arjun:
+    threads: 5
+    delay: 0
+
+# API Keys (Optional)
+api_keys:
+  shodan: null
+  censys_id: null
+  censys_secret: null
+  virustotal: null
+  github: null
+  builtwith: null
+  securitytrails: null
+
+# Performance Settings
+performance:
+  max_parallel_tasks: 5
+  enable_rate_limiting: true
+  respect_robots_txt: false
+  user_agent: "ReconAutomation/2.0"
+
+# Notification Settings (Optional)
+notifications:
+  enable_slack: false
+  enable_discord: false
+  enable_telegram: false
+  
+  slack:
+    webhook_url: null
+    
+  discord:
+    webhook_url: null
+    
+  telegram:
+    bot_token: null
+    chat_id: null
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  log_to_file: true
+  log_to_console: true
+  max_log_size_mb: 100
+  backup_count: 5
+
+# Reporting
+reporting:
+  enable_html: true
+  enable_json: true
+  enable_csv: true
+  enable_markdown: true

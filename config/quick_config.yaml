@@ -1,0 +1,101 @@
+# Minimal Configuration for Quick Scans
+# Use this for fast reconnaissance when you need quick results
+
+target:
+  domain: "example.com"
+
+directories:
+  output: "output"
+  logs: "logs"
+
+# Subdomain Enumeration - Only Fast Tools
+subdomain_enum:
+  enable_amass: false  # Disabled (slow)
+  enable_subfinder: true
+  enable_assetfinder: true
+  enable_crtsh: true
+  enable_github_subdomains: false
+  
+  subfinder:
+    threads: 20
+    timeout: 5
+
+# DNS Resolution
+dns_resolution:
+  enable_dnsx: true
+  dnsx:
+    threads: 100
+    retry: 1
+    timeout: 5
+
+# HTTP Probing
+http_probing:
+  enable_httpx: true
+  httpx:
+    threads: 100
+    timeout: 5
+    retry: 1
+    ports: "80,443,8080,8443"  # Only common ports
+
+# Port Scanning - Quick Only
+port_scanning:
+  enable_nmap: true
+  nmap:
+    quick_scan:
+      enable: true
+      top_ports: 100  # Reduced from 1000
+      timing: "T5"    # Fastest
+    full_scan:
+      enable: false   # Disabled for speed
+
+# Screenshot - Disabled
+screenshots:
+  enable_gowitness: false
+
+# Technology Detection - Minimal
+tech_detection:
+  enable_wappalyzer: false
+  enable_whatweb: true
+  enable_webanalyze: false
+  whatweb:
+    aggression: 1  # Passive only
+
+# Content Discovery - Disabled
+content_discovery:
+  enable_feroxbuster: false
+  enable_ffuf: false
+
+# JavaScript Analysis - Disabled
+js_analysis:
+  enable_linkfinder: false
+  enable_jsluice: false
+  enable_getjs: false
+
+# Vulnerability Scanning - Disabled
+vulnerability_scanning:
+  enable_nuclei: false
+
+# Additional Tools - Disabled
+additional_tools:
+  enable_waybackurls: false
+  enable_gau: false
+  enable_paramspider: false
+  enable_arjun: false
+
+# Performance
+performance:
+  max_parallel_tasks: 10
+  enable_rate_limiting: false  # Disabled for speed
+
+# Logging
+logging:
+  level: "INFO"
+  log_to_file: true
+  log_to_console: true
+
+# Reporting
+reporting:
+  enable_html: true
+  enable_json: true
+  enable_csv: false
+  enable_markdown: false

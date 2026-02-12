@@ -1,0 +1,25 @@
+# Python Requirements for Recon Automation Framework
+# Install with: pip install -r requirements.txt
+
+# Core utilities
+pyyaml>=6.0
+colorama>=0.4.6
+requests>=2.31.0
+
+# Async support
+aiohttp>=3.9.0
+
+# Data processing
+pandas>=2.0.0
+
+# CLI utilities
+rich>=13.0.0
+click>=8.1.0
+
+# Notifications (optional)
+python-telegram-bot>=20.0
+discord-webhook>=1.3.0
+
+# API clients (optional)
+shodan>=1.31.0
+censys>=2.2.0
